@@ -31,6 +31,10 @@ Example execution of code for a python script. Julia works similarly
 
 `python /path/to/txt2pynb.py /path/to/example_script.py`
 
+###Dependencies
+
+This script requires the python module `BeautifulSoup` to run in its current state. More information can be found [here](http://www.crummy.com/software/BeautifulSoup/).
+
 
 To Do
 -----
