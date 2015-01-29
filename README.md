@@ -31,12 +31,10 @@ Example execution of code for a python script. Julia works similarly
 
 `python /path/to/txt2pynb.py /path/to/example_script.py`
 
-###Dependencies
-
-This script requires the python module `BeautifulSoup` to run in its current state. More information can be found [here](http://www.crummy.com/software/BeautifulSoup/).
-
 
 To Do
 -----
 1. Turn into sublime text package
 2. Fix json output into pynb to make it look more pretty
+3. ~~ Remove dependencies~~
+4. Change so the infile is only called once (ie validate the already imported script) 

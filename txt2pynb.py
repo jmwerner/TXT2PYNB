@@ -1,6 +1,5 @@
 
-from BeautifulSoup import BeautifulSoup
-import re, sys, os
+import re, sys
 
 # args are parser file name [0] and path to python file to parse [1]
 args = sys.argv
@@ -10,15 +9,22 @@ input_file_name = args[1]
 outfile_split = args[1].split('.')
 output_file_name = outfile_split[0] + '.ipynb'
 
+
 if outfile_split[1] == 'py':
 	lang = 'python'
 else:
 	lang = 'julia'
 
-code_start = r'<code>'
-code_end = r'</code>'
-md_start = r'<md>'
-md_end = r'</md>'
+code_start = '<code>'
+code_end = '</code>'
+md_start = '<md>'
+md_end = '</md>'
+
+# Generate regexs for eventual extraction between tags
+# (?s) - to match over multiple lines - the rest is to match code between code tags
+code_tags_regex = '(?s)(?<=' + code_start +')(.*?)(?=' + code_end + ')'
+md_tags_regex = '(?s)(?<=' + md_start +')(.*?)(?=' + md_end + ')'
+
 
 outfile = open(output_file_name, "w")
 
@@ -67,7 +73,6 @@ def content_strip(line, output_file):
 		# Excape any other string literals
 		final_out = re.sub(r'\t', '\\\\t', final_out)
 		final_out = re.sub(r'\"', '\\\"', final_out)
-
 		output_file.write('\"' + final_out)
 		iter += 1
 		if iter != lines_length:
@@ -109,10 +114,8 @@ infile = open(input_file_name, "r")
 script = infile.read()
 infile.close()
 
-soup = BeautifulSoup(script)
-code_blocks = soup.findAll('code')
-md_blocks = soup.findAll('md')
-
+code_blocks = re.findall(code_tags_regex, script)
+md_blocks = re.findall(md_tags_regex, script)
 
 start_notebook(outfile)
 
@@ -121,7 +124,7 @@ md_index = 0
 for block in range(0,len(block_order)):
 	if block_order[block] == 'code':
 		start_code(outfile)
-		content_strip(code_blocks[code_index].contents, outfile)
+		content_strip(code_blocks[code_index], outfile)
 		end_code(outfile)
 		if code_index + md_index < (len(block_order)-1):
 			outfile.write(',\n')
@@ -130,7 +133,7 @@ for block in range(0,len(block_order)):
 		code_index += 1
 	else:
 		start_md(outfile)
-		content_strip(md_blocks[md_index].contents, outfile)
+		content_strip(md_blocks[md_index], outfile)
 		end_md(outfile)
 		if code_index + md_index < (len(block_order)-1):
 			outfile.write(',\n')
@@ -142,5 +145,12 @@ end_notebook(outfile)
 
 
 outfile.close()
+
+
+
+
+
+
+
 
 
