@@ -36,5 +36,5 @@ To Do
 -----
 1. Turn into sublime text package
 2. Fix json output into pynb to make it look more pretty
-3. ~~ Remove dependencies~~
+3. ~~Remove dependencies~~
 4. Change so the infile is only called once (ie validate the already imported script) 
