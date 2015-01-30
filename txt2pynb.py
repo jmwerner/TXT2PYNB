@@ -15,19 +15,6 @@ if outfile_split[1] == 'py':
 else:
 	lang = 'julia'
 
-code_start = '<code>'
-code_end = '</code>'
-md_start = '<md>'
-md_end = '</md>'
-
-# Generate regexs for eventual extraction between tags
-# (?s) - to match over multiple lines - the rest is to match code between code tags
-code_tags_regex = '(?s)(?<=' + code_start +')(.*?)(?=' + code_end + ')'
-md_tags_regex = '(?s)(?<=' + md_start +')(.*?)(?=' + md_end + ')'
-
-
-outfile = open(output_file_name, "w")
-
 # Ensures that all tags are opened and closed. Returns ordering of code and md blocks
 def validation(file):
 	codeFlag = False
@@ -56,7 +43,7 @@ def content_strip(line, output_file):
 	# Remove garbage from string
 	outline = ''.join(line)
 	outline = re.sub('\n#$', '', outline)
-	outline = re.sub('(^\n)', '', outline)
+	outline = re.sub('(^\n*)', '', outline)
 	all_lines = outline.split('\n')
 	iter = 0
 	strip_one_tab = False
@@ -106,16 +93,58 @@ def end_notebook(file):
 	return None;
 
 
-infile = open(input_file_name, "r")
-block_order = validation(infile)
-infile.close()
+outfile = open(output_file_name, "w")
 
 infile = open(input_file_name, "r")
 script = infile.read()
 infile.close()
 
-code_blocks = re.findall(code_tags_regex, script)
-md_blocks = re.findall(md_tags_regex, script)
+flag_start = '<flags>'
+flag_end = '</flags>'
+
+
+flag_tags_regex = '(?s)(?<=' + flag_start +')(.*?)(?=' + flag_end + ')'
+md_block_regex = '(?s)(?<=(\'\'\'|\"\"\"))(.*?)(?=(\'\'\'|\"\"\"))'
+flag_block = re.findall(flag_tags_regex, script)
+if len(flag_block) > 0:
+	if flag_block[0] == 'double_space_delimiter':
+		flag_strip = re.search('(?s)(?<=' + flag_end + ')(.*)', script)
+		newscript = flag_strip.group()
+		code_blocks = []
+		md_blocks = []
+		block_order = []
+		# Splits on two or more \n
+		splits = re.split(r'[\n]{3,}', newscript)
+		for block in range(0, len(splits)):
+			if splits[block] != '':
+				str_tester = re.search(md_block_regex, splits[block])
+				if str_tester:
+					content = str_tester.group()
+					md_blocks.append(content)
+					block_order.append('md')
+				else:
+					code_blocks.append(splits[block])
+					block_order.append('code')
+else:
+	code_start = '<code>'
+	code_end = '</code>'
+	md_start = '<md>'
+	md_end = '</md>'
+	# Generate regexs for eventual extraction between tags
+	# (?s) - to match over multiple lines - the rest is to match code between code tags
+	code_tags_regex = '(?s)(?<=' + code_start +')(.*?)(?=' + code_end + ')'
+	md_tags_regex = '(?s)(?<=' + md_start +')(.*?)(?=' + md_end + ')'
+	code_blocks = re.findall(code_tags_regex, script)
+	md_blocks = re.findall(md_tags_regex, script)
+	infile = open(input_file_name, "r")
+	block_order = validation(infile)
+	infile.close()
+
+
+## ADD VALIDATION FOR SPACE DELIMITED SCRIPTS
+
+
+
 
 start_notebook(outfile)
 
