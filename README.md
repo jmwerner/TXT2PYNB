@@ -27,10 +27,46 @@ This is line three of markdown
 </md>'''
 ```
 
+### Execution 
 Example execution of code for a python script. Julia works similarly
 
 `python /path/to/txt2pynb.py /path/to/example_script.py`
 
+### Using Flags
+Currently, placing a ```double_space_delimiter``` flag in the python script to be parsed will also allow blocks to be delimited by two or more spaces. 
+
+    <flags>double_space_delimiter</flags>
+
+Example of corresponding script. The markdown blocks must be in block comment format such as '''markdown'''  (or """markdown""" for Julia) 
+
+```
+<flags>double_space_delimiter</flags>
+
+	# can I have a comment here?
+	import re
+	a = 5
+	print re.search('a', "helalo") != None
+	print re.search('a', "hallo") != None
+
+
+
+
+a = 30 * 25
+for i in range(0,5):
+	print i
+
+
+'''
+
+This is a sigma $\sigma$ symbol in markdown and a forall $\forall$ symbol too!
+
+Here's some mathematics $ 1 + 2 - 3 * 5 / 15$ and "quoted" information
+
+And an integral for good measure $\int_{5}^{10}f(x)dx$
+
+#Markdown header! 
+'''
+```
 
 To Do
 -----
