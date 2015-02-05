@@ -15,11 +15,8 @@ Currently, placing a ```double_space_delimiter``` flag in the python script to b
 
     <flags>double_space_delimiter</flags>
 
-Example of corresponding script. The markdown blocks must be in block comment format such as '''markdown'''  (or """markdown""" for Julia) 
+The markdown blocks must be in block comment format such as '''markdown'''  (or """markdown""" for Julia) 
 
-```
-<flags>double_space_delimiter</flags>
-```
 
 To Do
 -----
