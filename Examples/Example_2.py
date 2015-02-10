@@ -1,5 +1,4 @@
-<flags>double_space_delimiter</flags>
-
+#<flags>double_space_delimiter</flags>
 # This script illustrates the double space delimiting between blocks. Be sure to
 # include the flag above ^^^
 

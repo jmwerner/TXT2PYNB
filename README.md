@@ -8,7 +8,7 @@ View `Examples` folder for sample code and output.
 ### Execution 
 Example execution of code for a python script. Julia works similarly.
 
-`python /path/to/txt2pynb.py /path/to/example_script.py`
+    python /path/to/txt2pynb.py /path/to/example_script.py
 
 ### Using Flags
 Currently, placing a ```double_space_delimiter``` flag in the python script to be parsed will also allow blocks to be delimited by two or more spaces. 
@@ -21,8 +21,9 @@ The markdown blocks must be in block comment format such as '''markdown'''  (or 
 To Do
 -----
 1. Turn into sublime text package
-2. Fix json output into pynb to make it look more pretty (also use JSON module)
+2. ~~Fix json output into pynb to make it look more pretty (also use JSON module)~~
 3. ~~Remove dependencies~~
 4. Change so the infile is only called once (ie validate the already imported script) 
 5. Fix indentation error
 6. Incorporate test suite (nose)
+7. Validate double space delimited script
