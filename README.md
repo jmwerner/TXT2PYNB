@@ -23,7 +23,8 @@ To Do
 1. Turn into sublime text package
 2. ~~Fix json output into pynb to make it look more pretty (also use JSON module)~~
 3. ~~Remove dependencies~~
-4. Change so the infile is only called once (ie validate the already imported script) 
-5. Fix indentation error
+4. ~~Change so the infile is only called once (ie validate the already imported script)~~
+5. ~~Fix indentation error~~
 6. Incorporate test suite (nose)
 7. Validate double space delimited script
+8. Improve flow by making the script more modular
