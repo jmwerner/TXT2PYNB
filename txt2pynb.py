@@ -14,11 +14,19 @@ outfile_split = args[1].split('.')
 output_file_name = outfile_split[0] + '.ipynb'
 
 
+# Define Constant values - Tags coded dynamically to change later if needed
+code_start = '<code>'
+code_end = '</code>'
+md_start = '<md>'
+md_end = '</md>'
 if outfile_split[1] == 'py':
     lang = 'python'
 else:
     lang = 'julia'
 
+#############
+# Functions #
+#############
 
 def strip_one_code(block_in):
     # Strip leading and trailing '\n' and '#' characters
@@ -59,57 +67,54 @@ def create_cell_array(all, order):
             output.append(one_md_cell)
     return output;
 
-with open(input_file_name, 'r') as infile:
-    script = infile.read()
-
-
-# Coded dynamically to change later if needed
-code_start = '<code>'
-code_end = '</code>'
-md_start = '<md>'
-md_end = '</md>'
-
-block_order = []
-all_blocks = []
-
-if space_flag:
-    # Splits on two or more \n
-    splits = re.split(r'[\n]{3,}', script)
-    for block in range(0, len(splits)):
-        if splits[block] != '':
-            str_tester = re.search('(?s)(?<=(\'\'\'|\"\"\"))(.*?)(?=(\'\'\'|\"\"\"))', splits[block])
-            if str_tester:
-                content = str_tester.group()
-                all_blocks.append(content)
-                block_order.append('md')
-                # Remove leading and trailing whitespace, then split on ''' or """ to find if md and 
-                # code block are fused together
-                str_split_compressed_blocks = re.split('(\'\'\'|\"\"\")', splits[block].strip())
-                last_chunk = str_split_compressed_blocks[-1]
-                if last_chunk != '':
-                    all_blocks.append(last_chunk)
+def split_function(spaces, script):
+    block_order = []
+    all_blocks = []
+    if spaces:
+        # Splits on two or more \n
+        splits = re.split(r'[\n]{3,}', script)
+        for block in range(0, len(splits)):
+            if splits[block] != '':
+                str_tester = re.search('(?s)(?<=(\'\'\'|\"\"\"))(.*?)(?=(\'\'\'|\"\"\"))', splits[block])
+                if str_tester:
+                    content = str_tester.group()
+                    all_blocks.append(content)
+                    block_order.append('md')
+                    # Remove leading and trailing whitespace, then split on ''' or """ to find if md and 
+                    # code block are fused together
+                    str_split_compressed_blocks = re.split('(\'\'\'|\"\"\")', splits[block].strip())
+                    last_chunk = str_split_compressed_blocks[-1]
+                    if last_chunk != '':
+                        all_blocks.append(last_chunk)
+                        block_order.append('code')
+                else:
+                    all_blocks.append(splits[block])
                     block_order.append('code')
-            else:
-                all_blocks.append(splits[block])
+    else:
+        script_splits = re.split('(' + code_start + '|' + md_start + '|' + code_end + '|' + md_end + ')', script)
+        for chunk in range(0, len(script_splits)):
+            if script_splits[chunk] == code_start and script_splits[chunk + 2] == code_end:
                 block_order.append('code')
-else:
-    script_splits = re.split('(' + code_start + '|' + md_start + '|' + code_end + '|' + md_end + ')', script)
-    for chunk in range(0, len(script_splits)):
-        if script_splits[chunk] == code_start and script_splits[chunk + 2] == code_end:
-            block_order.append('code')
-            all_blocks.append(script_splits[chunk + 1])
-        if script_splits[chunk] == md_start and script_splits[chunk + 2] == md_end:
-            block_order.append('md')
-            all_blocks.append(script_splits[chunk + 1])
+                all_blocks.append(script_splits[chunk + 1])
+            if script_splits[chunk] == md_start and script_splits[chunk + 2] == md_end:
+                block_order.append('md')
+                all_blocks.append(script_splits[chunk + 1])
+    return all_blocks, block_order;
 
 
+##############
+# Main Block #
+##############
 
-cell_array = create_cell_array(all_blocks, block_order)
+with open(input_file_name, 'r') as infile:
+    full_script = infile.read()
+
+parsed_blocks, parsed_order = split_function(space_flag, full_script)
+
+cell_array = create_cell_array(parsed_blocks, parsed_order)
 
 obj = {'metadata': {'name': ''}, 'nbformat': 3,'nbformat_minor': 0,'worksheets': [{"cells": cell_array}]}
 
 outfile = open(output_file_name, "w")
-
 outfile.write(json.dumps(obj, indent = 4))
-
 outfile.close()
