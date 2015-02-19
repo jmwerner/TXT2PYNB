@@ -6,12 +6,21 @@ a = 5
 #</code>
 
 #<code>
-    b = 10
-    print b * 20
+        # This code uses 4 spaces instead of a tab
+        b = 10
+        print b * 20
 #</code>
 #<code>
-    a = b * 25
+    c = b * 25
 #</code>
+
+	#<code>
+		# This code uses tabs
+		a = b * 25
+		for i in range(0,5):
+			b = a + i
+			print b
+	#</code>
 
 '''<md>
 This here is markdown

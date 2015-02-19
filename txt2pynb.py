@@ -29,12 +29,16 @@ else:
 #############
 
 def strip_one_code(block_in):
-    # Strip leading and trailing '\n' and '#' characters
+    # Strip tailing '#' character(s)
     block_out = block_in.rstrip('#')
+    # Strip tailing tab or 4 spaces to ensure '\n' gets stripped next
+    block_out = block_out.rstrip('[\t|    ]')
+    # Strip leading and tailing '\n'
     block_out = block_out.strip('\n')
     # Remove extra tabs (for people who indent within the raw code blocks) 
-    #  while preserving the appropriate amount of tabs within loops and other constructs
-    tab_match = re.match('\t+', block_out)
+    #  while preserving the appropriate amount of tabs within loops and other constructs. Also
+    #  sees 4 spaces as tabs in accordance with the pep8 style guide
+    tab_match = re.match('[\t|    ]+', block_out)
     if tab_match is not None:
         block_out = block_out.strip(tab_match.group(0))
         block_out = re.sub('\n' + tab_match.group(0), '\n', block_out)
