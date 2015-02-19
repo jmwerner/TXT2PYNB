@@ -1,6 +1,3 @@
-#<flags>double_space_delimiter</flags>
-# This script illustrates the double space delimiting between blocks. Be sure to
-# include the flag above ^^^
 
 
     # can I have a comment here?
@@ -27,3 +24,36 @@ And an integral for good measure $\int_{5}^{10}f(x)dx$
 
 #Markdown header! 
 '''
+
+
+a = 5
+b = 10
+a + b
+
+
+'''
+# BIG MARKDOWN HEADER!
+
+Markdown line two, here's some math:  $\sigma+\alpha=\beta$
+''' 
+a=20
+b=34
+c=45
+
+
+	'''
+	# BIG MARKDOWN HEADER!
+
+	Markdown line two, here's some math:  $\sigma+\alpha=\beta$
+	''' 
+	a=24
+	b=35
+	c=41
+
+
+	for i in range(0,5):
+		a = i * 10
+		b = a * i
+		for k in range(1,2):
+			b = a + 2 * k
+			d = b
