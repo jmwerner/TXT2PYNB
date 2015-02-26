@@ -45,12 +45,19 @@ c=45
 	# BIG MARKDOWN HEADER!
 
 	Markdown line two, here's some math:  $\sigma+\alpha=\beta$
+
+	Indenting entire blocks is ok too, 
 	''' 
 	a=24
 	b=35
 	c=41
 
 
+
+
+
+	# See, this block is indented and the for loop's appropriate indentations 
+	# are preserved too!
 	for i in range(0,5):
 		a = i * 10
 		b = a * i

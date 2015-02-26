@@ -18,7 +18,7 @@ Adding a number `1` flag as the third command line argument will allow for space
 
     python /path/to/txt2pynb.py /path/to/example_script_with_space_delimiting.py 1
 
-The markdown blocks must be in block comment format such as '''markdown'''  (or """markdown""" for Julia) in order to be correctly parsed. Also, markdown blocks can be squished on top of code blocks to allow for a markdown and code block in one double space-delimited block.
+The markdown blocks must be in block comment format such as '''markdown'''  (or """markdown""" for Julia) in order to be correctly parsed. Also, markdown blocks can be squished on top of code blocks to allow for a markdown and code block in one double space-delimited block, as seen in Example_2 in the `Examples` folder. 
 
 
 To Do
@@ -30,5 +30,5 @@ To Do
 5. ~~Fix indentation error~~
 6. Incorporate test suite (nose)
 7. ~~Validate double space delimited script~~
-8. Improve flow by making the script more modular (condense stripping functions as well)
-9. Fix spacing issue in code stripping function
+8. ~~Improve flow by making the script more modular (condense stripping functions as well)~~
+9. ~~Fix spacing issue in code stripping function~~

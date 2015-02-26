@@ -28,29 +28,20 @@ else:
 # Functions #
 #############
 
-def strip_one_code(block_in):
-    # Strip tailing '#' character(s)
-    block_out = block_in.rstrip('#')
-    # Strip tailing tab or 4 spaces to ensure '\n' gets stripped next
-    block_out = block_out.rstrip('[\t|    ]')
-    # Strip leading and tailing '\n'
-    block_out = block_out.strip('\n')
+def strip_one_block(block_in, celltype):
+    if celltype == 'code':
+        # Strip tailing '#' character(s)
+        block_out = block_in.rstrip('#')
+        # Strip tailing tab or spaces to ensure '\n' gets stripped next
+        block_out = block_out.rstrip('[\t| ]')
+        # Strip leading and tailing '\n'
+        block_out = block_out.strip('\n')
+    else:
+        block_out = block_in.strip('\n')
     # Remove extra tabs (for people who indent within the raw code blocks) 
     #  while preserving the appropriate amount of tabs within loops and other constructs. Also
     #  sees 4 spaces as tabs in accordance with the pep8 style guide
     tab_match = re.match('[\t|    ]+', block_out)
-    if tab_match is not None:
-        block_out = block_out.strip(tab_match.group(0))
-        block_out = re.sub('\n' + tab_match.group(0), '\n', block_out)
-    return block_out;
-
-def strip_one_md(block_in):
-    block_out = block_in
-    # Strip leading and trailing '\n' and '#' characters
-    block_out = block_out.strip('\n')
-    # Remove extra tabs (for people who indent within the raw code blocks) 
-    #  while preserving the appropriate amount of tabs within loops and other constructs
-    tab_match = re.match('\t+', block_out)
     if tab_match is not None:
         block_out = block_out.strip(tab_match.group(0))
         block_out = re.sub('\n' + tab_match.group(0), '\n', block_out)
@@ -61,12 +52,12 @@ def create_cell_array(all, order):
     for block in range(0,len(order)):
         if order[block] == 'code':
             one_code_cell = {'cell_type': 'code', 'collapsed': False, 'language': lang,'metadata': {},'outputs': [] }
-            stripped_cell = strip_one_code(all[block])
+            stripped_cell = strip_one_block(all[block], 'code')
             one_code_cell.update({'input':stripped_cell})
             output.append(one_code_cell)
         else:
             one_md_cell = {'cell_type': 'markdown', 'metadata': {}}
-            stripped_cell = strip_one_md(all[block])
+            stripped_cell = strip_one_block(all[block], 'md')
             one_md_cell.update({'source':stripped_cell})
             output.append(one_md_cell)
     return output;
@@ -89,6 +80,7 @@ def split_function(spaces, script):
                     str_split_compressed_blocks = re.split('(\'\'\'|\"\"\")', splits[block].strip())
                     last_chunk = str_split_compressed_blocks[-1]
                     if last_chunk != '':
+                        last_chunk = re.sub('^[ ]{1}', '', last_chunk)
                         all_blocks.append(last_chunk)
                         block_order.append('code')
                 else:
