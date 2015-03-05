@@ -2,7 +2,7 @@
 
     # can I have a comment here?
     import re
-    a = 5
+    a = 530
     print re.search('a', "helalo") != None
     print re.search('a', "hallo") != None
 

@@ -1,0 +1,5 @@
+{
+    "cmd": ["python", "$packages/txt2pynb/txt2pynb.py", "$file"],
+    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+    "selector": "source.python, source.julia"
+}
