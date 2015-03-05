@@ -5,16 +5,11 @@ args = sys.argv
 
 input_file_name = args[1]
 
-# args [2] will be a 1 or 0 flag to use double space delimiting
-space_flag = False
-if len(args) > 2:
-    space_flag = args[2] == '1'
-
 outfile_split = args[1].split('.')
 output_file_name = outfile_split[0] + '.ipynb'
 
 
-# Define Constant values - Tags coded dynamically to change later if needed
+# Define global constant values - Tags coded dynamically to easily change later if needed
 code_start = '<code>'
 code_end = '</code>'
 md_start = '<md>'
@@ -27,6 +22,9 @@ else:
 #############
 # Functions #
 #############
+
+def space_or_not(script_in):
+    return not ((code_start in script_in) or (md_start in script_in));
 
 def strip_one_block(block_in, celltype):
     if celltype == 'code':
@@ -104,6 +102,8 @@ def split_function(spaces, script):
 
 with open(input_file_name, 'r') as infile:
     full_script = infile.read()
+
+space_flag = space_or_not(full_script)
 
 parsed_blocks, parsed_order = split_function(space_flag, full_script)
 
