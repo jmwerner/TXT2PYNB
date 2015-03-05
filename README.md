@@ -10,7 +10,7 @@ This package can be dowloaded from [package control](https://packagecontrol.io/)
 
 Once installed in Sublime Text 2, TXT2PYNB can be called as a build-system by pressing `C + b` where `C` is the `command` key on Apple computers and `ctrl` on others. 
 
-Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`). This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call can be turned off by removing the `TXT2PYNB.sublime-build` file in the Packages folder.
+Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`) if the script has been saved first. This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call to the TXT2PYNB build system can be turned off by removing the `TXT2PYNB.sublime-build` file in the Packages folder.
 
 ### Script Execution (For use outside of Sublime Text 2)
 
