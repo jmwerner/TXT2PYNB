@@ -1,10 +1,10 @@
 
 
-    # can I have a comment here?
-    import re
-    a = 530
-    print re.search('a', "helalo") != None
-    print re.search('a', "hallo") != None
+# can I have a comment here?
+import re
+a = 530
+print re.search('a', "helalo") != None
+print re.search('a', "hallo") != None
 
 
 
@@ -41,26 +41,26 @@ b=34
 c=45
 
 
-	'''
-	# BIG MARKDOWN HEADER!
+'''
+# BIG MARKDOWN HEADER!
 
-	Markdown line two, here's some math:  $\sigma+\alpha=\beta$
+Markdown line two, here's some math:  $\sigma+\alpha=\beta$
 
-	Indenting entire blocks is ok too, 
-	''' 
-	a=24
-	b=35
-	c=41
-
-
+Indenting entire blocks is ok too, 
+''' 
+a=24
+b=35
+c=41
 
 
 
-	# See, this block is indented and the for loop's appropriate indentations 
-	# are preserved too!
-	for i in range(0,5):
-		a = i * 10
-		b = a * i
-		for k in range(1,2):
-			b = a + 2 * k
-			d = b
+
+
+# See, this block is indented and the for loop's appropriate indentations 
+# are preserved too!
+for i in range(0,5):
+	a = i * 10
+	b = a * i
+	for k in range(1,2):
+		b = a + 2 * k
+		d = b
