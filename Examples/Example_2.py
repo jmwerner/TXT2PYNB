@@ -8,7 +8,6 @@ print re.search('a', "hallo") != None
 
 
 
-
 a = 30 * 25
 for i in range(0,5):
     print i
@@ -55,9 +54,6 @@ c=41
 
 
 
-
-# See, this block is indented and the for loop's appropriate indentations 
-# are preserved too!
 for i in range(0,5):
 	a = i * 10
 	b = a * i
