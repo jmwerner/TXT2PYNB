@@ -1,6 +1,6 @@
 # TXT2PYNB
 
-TXT2PYNB is a Sublime Text 2 package that takes a Python (or Julia) file with inline block-commented markdown blocks and turns it into an [iPython](http://ipython.org/notebook.html) (or [iJulia](https://github.com/JuliaLang/IJulia.jl)) notebook (`.ipynb`). Please view the "Tags" section below or the `Examples` folder for examples of scripts. The package will output a notebook of the same name as the script in the same directory where the script lives. (e.g. `my_script.py` will output `my_script.ipynb` in the same directory)
+TXT2PYNB is a Sublime Text 2 package that takes a Python (or Julia) file with inline block-commented markdown blocks and turns it into an [iPython](http://ipython.org/notebook.html) (or [iJulia](https://github.com/JuliaLang/IJulia.jl)) notebook (`.ipynb`). Please view the "Tags" section below or the `Examples` folder for examples of scripts. The package will output a notebook of the same name as the script in the same directory where the script is saved. (e.g. `my_script.py` will output `my_script.ipynb` in the same directory)
 
 ### Download
 
@@ -10,11 +10,11 @@ This package can be dowloaded from [package control](https://packagecontrol.io/)
 
 Once installed in Sublime Text 2, TXT2PYNB can be called as a build-system by pressing `C + b` where `C` is the `command` key on Apple computers and `ctrl` on others. 
 
-Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`) if the script has been saved first. This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call to the TXT2PYNB build system can be turned off by removing the `TXT2PYNB.sublime-build` file in the Packages folder.
+Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`) if the script has been saved first. This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call to the TXT2PYNB build system can be turned off by removing the `TXT2PYNB.sublime-build` file in this package's folder.
 
 ### Script Execution (For use outside of Sublime Text 2)
 
-Example execution of code for a python script. Julia works similarly.
+Example execution of code for a python script, Julia works similarly. The original command-line based txt2pynb.py script is in the `Command_Line_Execution` folder.
 
     python /path/to/txt2pynb.py /path/to/example_script.py
 

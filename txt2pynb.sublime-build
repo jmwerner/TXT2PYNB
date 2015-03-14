@@ -1,5 +1,20 @@
+
 {
-    "cmd": ["python", "$packages/txt2pynb/txt2pynb.py", "$file"],
-    "file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
-    "selector": "source.python, source.julia"
+	"target": "txt2pynb",
+	"selector": "source.python, source.julia",
+
+	"osx":
+		{
+			"file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)"
+		},
+
+	"windows":
+		{
+			"file_regex": "^((?:.:)?[^:\n\r]*):([0-9]+):?([0-9]+)?:? (.*)$"
+		},
+
+	"linux":
+		{
+			"file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)"
+		}
 }

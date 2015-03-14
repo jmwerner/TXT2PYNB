@@ -111,6 +111,7 @@ cell_array = create_cell_array(parsed_blocks, parsed_order)
 
 obj = {'metadata': {'name': ''}, 'nbformat': 3,'nbformat_minor': 0,'worksheets': [{"cells": cell_array}]}
 
+
 outfile = open(output_file_name, "w")
 outfile.write(json.dumps(obj, indent = 4))
 outfile.close()
