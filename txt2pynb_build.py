@@ -22,3 +22,5 @@ class txt2pynbCommand(sublime_plugin.WindowCommand):
             outfile = open(output_path, "w")
             outfile.write(json.dumps(obj, indent = 4))
             outfile.close()
+
+            sublime.status_message("TXT2PYNB Complete")
