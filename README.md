@@ -8,9 +8,9 @@ This package can be dowloaded from [package control](https://packagecontrol.io/)
 
 ### Building Notebook
 
-Once installed in Sublime Text 2, TXT2PYNB can be called as a build-system by pressing `C + b` where `C` is the `command` key on Apple computers and `ctrl` on others. 
+Once installed in Sublime Text 2, TXT2PYNB can be called as a build-system by pressing `C + b` where `C` is the `command` key on Apple computers and `ctrl` on others. For some users, the TXT2PYNB build system will be called by default with `.py` or `.jl` scripts, but others might need to select it from `Tools->Build System->TXT2PYNB`.
 
-Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`) if the script has been saved first. This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call to the TXT2PYNB build system can be turned off by removing the `TXT2PYNB.sublime-build` file in this package's folder.
+Alternatively, TXT2PYNB can be searched and called using the Command Palette (`cmd + shift + p`). This is particularly useful if a user regularly uses other build systems for Python or Julia scripts. The default call to the TXT2PYNB build system can be turned off by removing the `TXT2PYNB.sublime-build` file in this package's folder.
 
 ### Script Execution (For use outside of Sublime Text 2)
 
@@ -54,5 +54,6 @@ To Do
 7. ~~Validate double space delimited script~~
 8. ~~Improve flow by making the script more modular (condense stripping functions as well)~~
 9. ~~Fix spacing issue in code stripping function~~
-10. Address compatability issues
+10. Address compatability issues (test and make sure it works on Windows)
 11. Add ability to 'pull back' code from edited notebook
+12. Add ST 3 compatability 
