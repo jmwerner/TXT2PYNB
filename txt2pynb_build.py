@@ -6,8 +6,8 @@ class txt2pynbCommand(sublime_plugin.WindowCommand):
         view = self.window.active_view()
         root = view.file_name()
 
-        if root is None:
-            sublime.error_message("ERROR: Current buffer must be saved prior to building iPython notebook")
+        if root is None or view.is_dirty():
+            sublime.error_message("ERROR: Current buffer must be saved prior to building iPython notebook with TXT2PYNB")
         else:
             base_language, output_path = pre_process(root)
 
