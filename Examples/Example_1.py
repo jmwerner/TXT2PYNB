@@ -9,13 +9,13 @@ e = 50928734
 
 #<code>
 b = 10
-print b * 20
+print(b * 20)
 #</code>
 #<code>
 # This code uses 4 spaces instead of a tab (pep8 compliance)
 for i in range(0,5):
     b = a + i
-    print b
+    print(b)
 #</code>
 
 #<code>
@@ -23,7 +23,7 @@ for i in range(0,5):
 a = b * 25
 for i in range(0,5):
 	b = a + i
-	print b
+	print(b)
 #</code>
 
 '''<md>

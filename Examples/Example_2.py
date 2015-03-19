@@ -3,14 +3,14 @@
 # can I have a comment here?
 import re
 a = 538734
-print re.search('a', "helalo") != None
-print re.search('a', "hallo") != None
+print(re.search('a', "helalo") != None)
+print(re.search('a', "hallo") != None)
 
 
 
 a = 30 * 25
 for i in range(0,5):
-    print i
+    print(i)
 
 
 '''
