@@ -2,6 +2,12 @@ import sublime_plugin, sublime, json, re
 
 class txt2pynbCommand(sublime_plugin.WindowCommand):
     def run(self, cmd="", file_regex="", path=""):
+
+        if sublime.version() < '3000':
+            # Then ST2 is being used and Python is < 3
+            ST3_flag = False
+        else:
+            ST3_flag = True
         
         view = self.window.active_view()
         root = view.file_name()
@@ -11,8 +17,12 @@ class txt2pynbCommand(sublime_plugin.WindowCommand):
         else:
             base_language, output_path = pre_process(root)
 
-            with open(root, 'r') as infile:
-                full_script = infile.read()
+            if ST3_flag:
+                with open(root, 'r', encoding = 'utf-8') as infile:
+                    full_script = infile.read()
+            else:
+                with open(root, 'r') as infile:
+                    full_script = infile.read()
 
             parsed_blocks, parsed_order = split_function(full_script)
             cell_array = create_cell_array(parsed_blocks, parsed_order, base_language)
