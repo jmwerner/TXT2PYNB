@@ -1,20 +1,4 @@
-
 {
 	"target": "txt2pynb",
-	"selector": "source.python, source.julia",
-
-	"osx":
-		{
-			"file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)"
-		},
-
-	"windows":
-		{
-			"file_regex": "^((?:.:)?[^:\n\r]*):([0-9]+):?([0-9]+)?:? (.*)$"
-		},
-
-	"linux":
-		{
-			"file_regex": "^(...*?):([0-9]+): ([0-9]*)([^\\.]+)"
-		}
+	"selector": "source.python, source.julia"
 }
