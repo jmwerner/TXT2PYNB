@@ -1,6 +1,7 @@
 import re
 import sys
 import json
+import codecs
 
 code_start = '<code>'
 code_end = '</code>'
@@ -101,7 +102,7 @@ def txt2pynb(input_file_name, output_file_name):
     else:
         lang = 'julia'
 
-    with open(input_file_name, 'r') as infile:
+    with codecs.open(input_file_name, 'r', encoding="utf8") as infile:
         full_script = infile.read()
 
     space_flag = space_or_not(full_script)
@@ -117,8 +118,8 @@ def txt2pynb(input_file_name, output_file_name):
         'worksheets': [{"cells": cell_array}]
     }
 
-    outfile = open(output_file_name, "w")
-    outfile.write(json.dumps(obj, indent=4))
+    outfile = codecs.open(output_file_name, "w", encoding="utf-8")
+    outfile.write(json.dumps(obj, indent=4, ensure_ascii=False))
     outfile.close()
 
 
