@@ -1,30 +1,17 @@
-import re, sys, json
+import re
+import sys
+import json
+import codecs
 
-# args are parser file name [0] and path to python file to parse [1]
-args = sys.argv
-
-input_file_name = args[1]
-
-outfile_split = args[1].split('.')
-output_file_name = outfile_split[0] + '.ipynb'
-
-
-# Define global constant values - Tags coded dynamically to easily change later if needed
 code_start = '<code>'
 code_end = '</code>'
 md_start = '<md>'
 md_end = '</md>'
-if outfile_split[1] == 'py':
-    lang = 'python'
-else:
-    lang = 'julia'
 
-#############
-# Functions #
-#############
 
 def space_or_not(script_in):
-    return not ((code_start in script_in) or (md_start in script_in));
+    return not ((code_start in script_in) or (md_start in script_in))
+
 
 def strip_one_block(block_in, celltype):
     if celltype == 'code':
@@ -36,29 +23,37 @@ def strip_one_block(block_in, celltype):
         block_out = block_out.strip('\n')
     else:
         block_out = block_in.strip('\n')
-    # Remove extra tabs (for people who indent within the raw code blocks) 
+    # Remove extra tabs (for people who indent within the raw code blocks)
     #  while preserving the appropriate amount of tabs within loops and other constructs. Also
     #  sees 4 spaces as tabs in accordance with the pep8 style guide
     tab_match = re.match('[\t|    ]+', block_out)
     if tab_match is not None:
         block_out = block_out.strip(tab_match.group(0))
         block_out = re.sub('\n' + tab_match.group(0), '\n', block_out)
-    return block_out;
+    return block_out
 
-def create_cell_array(all, order):
+
+def create_cell_array(all, order, lang):
     output = []
-    for block in range(0,len(order)):
+    for block in range(0, len(order)):
         if order[block] == 'code':
-            one_code_cell = {'cell_type': 'code', 'collapsed': False, 'language': lang,'metadata': {},'outputs': [] }
+            one_code_cell = {
+                'cell_type': 'code',
+                'collapsed': False,
+                'language': lang,
+                'metadata': {},
+                'outputs': []
+            }
             stripped_cell = strip_one_block(all[block], 'code')
-            one_code_cell.update({'input':stripped_cell})
+            one_code_cell.update({'input': stripped_cell})
             output.append(one_code_cell)
         else:
             one_md_cell = {'cell_type': 'markdown', 'metadata': {}}
             stripped_cell = strip_one_block(all[block], 'md')
-            one_md_cell.update({'source':stripped_cell})
+            one_md_cell.update({'source': stripped_cell})
             output.append(one_md_cell)
-    return output;
+    return output
+
 
 def split_function(spaces, script):
     block_order = []
@@ -68,13 +63,14 @@ def split_function(spaces, script):
         splits = re.split(r'[\n]{3,}', script)
         for block in range(0, len(splits)):
             if splits[block] != '':
-                str_tester = re.search('(?s)(?<=(\'\'\'|\"\"\"))(.*?)(?=(\'\'\'|\"\"\"))', splits[block])
+                str_tester = re.search('(?s)(?<=(\'\'\'|\"\"\"))(.*?)(?=(\'\'\'|\"\"\"))',
+                                       splits[block])
                 if str_tester:
                     content = str_tester.group()
                     all_blocks.append(content)
                     block_order.append('md')
-                    # Remove leading and trailing whitespace, then split on ''' or """ to find if md and 
-                    # code block are fused together
+                    # Remove leading and trailing whitespace, then split on ''' or """
+                    # to find if md and code block are fused together
                     str_split_compressed_blocks = re.split('(\'\'\'|\"\"\")', splits[block].strip())
                     last_chunk = str_split_compressed_blocks[-1]
                     if last_chunk != '':
@@ -85,7 +81,10 @@ def split_function(spaces, script):
                     all_blocks.append(splits[block])
                     block_order.append('code')
     else:
-        script_splits = re.split('(' + code_start + '|' + md_start + '|' + code_end + '|' + md_end + ')', script)
+        script_splits = re.split(
+            '(' + code_start + '|' + md_start + '|' + code_end + '|' + md_end + ')',
+            script
+        )
         for chunk in range(0, len(script_splits)):
             if script_splits[chunk] == code_start and script_splits[chunk + 2] == code_end:
                 block_order.append('code')
@@ -93,29 +92,43 @@ def split_function(spaces, script):
             if script_splits[chunk] == md_start and script_splits[chunk + 2] == md_end:
                 block_order.append('md')
                 all_blocks.append(script_splits[chunk + 1])
-    return all_blocks, block_order;
+    return all_blocks, block_order
 
 
-##############
-# Main Block #
-##############
+def txt2pynb(input_file_name, output_file_name):
 
-with open(input_file_name, 'r') as infile:
-    full_script = infile.read()
+    if input_file_name.endswith('py'):
+        lang = 'python'
+    else:
+        lang = 'julia'
 
-space_flag = space_or_not(full_script)
+    with codecs.open(input_file_name, 'r', encoding="utf8") as infile:
+        full_script = infile.read()
 
-parsed_blocks, parsed_order = split_function(space_flag, full_script)
+    space_flag = space_or_not(full_script)
 
-cell_array = create_cell_array(parsed_blocks, parsed_order)
+    parsed_blocks, parsed_order = split_function(space_flag, full_script)
 
-obj = {'metadata': {'name': ''}, 'nbformat': 3,'nbformat_minor': 0,'worksheets': [{"cells": cell_array}]}
+    cell_array = create_cell_array(parsed_blocks, parsed_order, lang)
+
+    obj = {
+        'metadata': {'name': ''},
+        'nbformat': 3,
+        'nbformat_minor': 0,
+        'worksheets': [{"cells": cell_array}]
+    }
+
+    outfile = codecs.open(output_file_name, "w", encoding="utf-8")
+    outfile.write(json.dumps(obj, indent=4, ensure_ascii=False))
+    outfile.close()
 
 
-outfile = open(output_file_name, "w")
-outfile.write(json.dumps(obj, indent = 4))
-outfile.close()
+if __name__ == "__main__":
 
+    # args are parser file name [0] and path to python file to parse [1]
+    args = sys.argv
 
-
-
+    input_file_name = args[1]
+    outfile_split = args[1].split('.')
+    output_file_name = outfile_split[0] + '.ipynb'
+    txt2pynb(input_file_name, output_file_name)
