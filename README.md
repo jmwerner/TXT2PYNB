@@ -14,7 +14,7 @@ Alternatively, TXT2PYNB can be searched and called using the Command Palette (`c
 
 ### Script Execution (For use outside of Sublime Text 2)
 
-Example execution of code for a python script, Julia works similarly. The original command-line based txt2pynb.py script is in the `Command_Line_Execution` folder. NOTE: This currently only works for python versions < 3.0 (or 3.0+ if no unicode characters are used)
+Example execution of code for a python script, Julia works similarly. The command-line-executable script txt2pynb.py is in the `txt2pynb` folder. 
 
     python /path/to/txt2pynb.py /path/to/example_script.py
 
