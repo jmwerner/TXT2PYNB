@@ -45,15 +45,5 @@ View `Examples` folder for sample code and output.
 
 To Do
 -----
-1. ~~Turn into sublime text package~~
-2. ~~Fix json output into pynb to make it look more pretty (also use JSON module)~~
-3. ~~Remove dependencies~~
-4. ~~Change so the infile is only called once (ie validate the already imported script)~~
-5. ~~Fix indentation error~~
-6. Incorporate test suite (nose)
-7. ~~Validate double space delimited script~~
-8. ~~Improve flow by making the script more modular (condense stripping functions as well)~~
-9. ~~Fix spacing issue in code stripping function~~
-10. Address compatability issues (test and make sure it works on Windows)
-11. Add ability to 'pull back' code from edited notebook
-12. Add ST 3 compatability 
+1. Add ability to 'pull back' code from edited notebook
+2. iPython 3+ compatability (output version 4 .ipynb) 
